@@ -1,0 +1,22 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: order-service
+  namespace: local
+  labels:
+    app: order-service
+    env: local
+spec:
+  parentRefs:
+    - name: gateway
+      namespace: local
+  hostnames:
+    - api.fbi.com
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /order
+      backendRefs:
+        - name: order-service
+          port: 80

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  namespace: local
+  labels:
+    app: order-service
+    env: local
+spec:
+  selector:
+    app: order-service
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: http
