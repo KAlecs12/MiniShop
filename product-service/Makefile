@@ -9,7 +9,7 @@ else
  IMAGE_TAG ?= $(GIT_BRANCH)
 endif
 
-IMAGE_NAME ?= product-service
+IMAGE_NAME ?= products-service
 
 default: help
 

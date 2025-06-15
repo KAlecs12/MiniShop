@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+  namespace: minishop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image: minishop/product-service:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: product-service-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-service
+  namespace: minishop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart-service
+  template:
+    metadata:
+      labels:
+        app: cart-service
+    spec:
+      containers:
+        - name: cart-service
+          image: minishop/cart-service:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: cart-service-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: minishop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: minishop/order-service:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: order-service-config 

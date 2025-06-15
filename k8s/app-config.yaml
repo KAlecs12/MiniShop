@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-service-config
+  namespace: minishop
+data:
+  DATABASE_HOST: product-db
+  DATABASE_PORT: "5432"
+  DATABASE_USERNAME: postgres
+  DATABASE_PASSWORD: postgres
+  DATABASE_NAME: product
+  DATABASE_SYNC: "true"
+  PORT: "3000"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cart-service-config
+  namespace: minishop
+data:
+  DATABASE_HOST: cart-db
+  DATABASE_PORT: "5432"
+  DATABASE_USERNAME: postgres
+  DATABASE_PASSWORD: postgres
+  DATABASE_NAME: cart
+  DATABASE_SYNC: "true"
+  PORT: "3000"
+  PRODUCT_SERVICE_URL: "http://product-service:3000"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-service-config
+  namespace: minishop
+data:
+  DATABASE_HOST: order-db
+  DATABASE_PORT: "5432"
+  DATABASE_USERNAME: postgres
+  DATABASE_PASSWORD: postgres
+  DATABASE_NAME: order
+  DATABASE_SYNC: "true"
+  PORT: "3000"
+  PRODUCT_SERVICE_URL: "http://product-service:3000"
+  CART_SERVICE_URL: "http://cart-service:3000" 

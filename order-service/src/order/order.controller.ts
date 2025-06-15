@@ -1,27 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Order, OrderStatus } from './entities/order.entity';
 
-@Controller('order')
+@ApiTags('orders')
+@Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Post()
-  create(
-    @Headers('x-user-id') userId: string,
-    @Body() createOrderDto: CreateOrderDto
-  ) {
-    return this.orderService.create(createOrderDto);
+  @Post(':userId')
+  @ApiOperation({ summary: 'Create a new order from cart' })
+  @ApiResponse({ status: 201, description: 'Order created', type: Order })
+  async createOrder(@Param('userId') userId: string): Promise<Order> {
+    return this.orderService.createOrder(userId);
   }
 
-  @Get()
-  findAll() {
-    return this.orderService.findAll();
+  @Get(':userId')
+  @ApiOperation({ summary: 'Get all orders for a user' })
+  @ApiResponse({ status: 200, description: 'Returns all orders', type: [Order] })
+  async getUserOrders(@Param('userId') userId: string): Promise<Order[]> {
+    return this.orderService.getUserOrders(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
+  @Get(':userId/:orderId')
+  @ApiOperation({ summary: 'Get a specific order' })
+  @ApiResponse({ status: 200, description: 'Returns the order', type: Order })
+  async getOrder(
+    @Param('userId') userId: string,
+    @Param('orderId') orderId: string,
+  ): Promise<Order> {
+    return this.orderService.getOrder(userId, orderId);
+  }
+
+  @Post(':orderId/status')
+  @ApiOperation({ summary: 'Update order status' })
+  @ApiResponse({ status: 200, description: 'Order status updated', type: Order })
+  async updateOrderStatus(
+    @Param('orderId') orderId: string,
+    @Body('status') status: OrderStatus,
+  ): Promise<Order> {
+    return this.orderService.updateOrderStatus(orderId, status);
   }
 }

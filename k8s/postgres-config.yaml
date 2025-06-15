@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: minishop
+data:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: postgres
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-db-config
+  namespace: minishop
+data:
+  DATABASE_NAME: product
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cart-db-config
+  namespace: minishop
+data:
+  DATABASE_NAME: cart
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-db-config
+  namespace: minishop
+data:
+  DATABASE_NAME: order 

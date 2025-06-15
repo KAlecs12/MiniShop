@@ -56,9 +56,9 @@ spec:
 
       containers:
         - name: products-service
-          image: docker.io/cgayet/products-service:0.0.1
+          image: docker.io/cgayet/products-service:0.0.2
           ports:
-            - containerPort: 5000
+            - containerPort: 3000
               name: http
               protocol: TCP
           envFrom:
