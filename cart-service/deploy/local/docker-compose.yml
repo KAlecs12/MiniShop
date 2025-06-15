@@ -33,7 +33,7 @@ services:
       - DATABASE_NAME=cart
       - DATABASE_SSL=false
     ports:
-      - "3000:3000"
+      - "3001:3000"
     networks:
       - net
     depends_on:

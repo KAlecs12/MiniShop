@@ -33,7 +33,7 @@ services:
       - DATABASE_NAME=order
       - DATABASE_SSL=false
     ports:
-      - "3000:3000"
+      - "3002:3000"
     networks:
       - net
     depends_on:
