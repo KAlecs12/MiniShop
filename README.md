@@ -24,11 +24,16 @@ k8s/ (manifests Kubernetes pour le déploiement)
 ## Déploiement rapide (via Makefile)
 
 ### 1. Construction des images Docker
-Depuis la racine du projet, exécutez :
+Depuis la racine de chaque fichier, exécutez :
 ```sh
-make build
+	docker build --tag docker.io/cgayet/products-service:0.0.1 .
+	docker build --tag docker.io/cgayet/cart-service:0.0.1 .
+	docker build --tag docker.io/cgayet/order-service:0.0.1 .
+	kind load docker-image docker.io/cgayet/products-service:0.0.1
+	kind load docker-image docker.io/cgayet/cart-service:0.0.1
+	kind load docker-image docker.io/cgayet/order-service:0.0.1 
 ```
-Cette commande va créer les images Docker pour les trois services (product, cart et order) avec le tag minishop/<service>:latest.
+Ces commandes vont créer les images Docker pour les trois services (product, cart et order) puis on va les load avec kind.
 
 ### 2. Lancement sur Kubernetes
 Déployez l’ensemble de l’infrastructure avec :
@@ -36,6 +41,19 @@ Déployez l’ensemble de l’infrastructure avec :
 make k8s-deploy
 ```
 Cette commande applique les fichiers de configuration Kubernetes (namespace, ConfigMaps, volumes, déploiements et services) dans le namespace minishop.
+On pense bien à apply dans le fichier .\k8s les services suivant :
+```sh
+kubectl apply -f product-service.yaml
+kubectl apply -f cart-service.yaml
+kubectl apply -f order-service.yaml
+kubectl rollout restart deployment product-service -n minishop
+kubectl rollout restart deployment cart-service -n minishop
+kubectl rollout restart deployment order-service -n minishop
+```
+On peut le vérifier avec la commande suivante 
+```sh
+kubectl get deployments -n minishop
+```
 
 ### 3. Accéder aux services
 - Exposition : Par défaut, les services sont accessibles uniquement dans le cluster (ClusterIP). Pour les tester localement, utilisez les redirections de ports :

@@ -4,7 +4,7 @@ networks:
 
 services:
   # Postgres database
-  database:
+  database-order:
     restart: "no"
     image: postgres:16-alpine
     healthcheck:
@@ -15,6 +15,7 @@ services:
     volumes:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
     environment:
+      - POSTGRES_DB=izitek
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
@@ -24,18 +25,20 @@ services:
 
   order-service:
     restart: "no"
-    image: docker.io/cgayet/order-service:0.0.1
+    build:
+      context: ../../ 
+      dockerfile: Dockerfile
     environment:
       - NODE_ENV=development
-      - DATABASE_HOST=database
+      - DATABASE_HOST=database-order
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=postgres
       - DATABASE_NAME=order
       - DATABASE_SSL=false
     ports:
-      - "3002:3000"
+      - "3000:3000"
     networks:
       - net
     depends_on:
-      database:
+      database-order:
         condition: service_healthy

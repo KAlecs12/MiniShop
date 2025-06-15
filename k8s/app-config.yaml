@@ -24,7 +24,7 @@ data:
   DATABASE_PASSWORD: postgres
   DATABASE_NAME: cart
   DATABASE_SYNC: "true"
-  PORT: "3001"
+  PORT: "3000"
   PRODUCT_SERVICE_URL: "http://product-service:3000"
 ---
 apiVersion: v1
@@ -39,6 +39,6 @@ data:
   DATABASE_PASSWORD: postgres
   DATABASE_NAME: order
   DATABASE_SYNC: "true"
-  PORT: "3002"
+  PORT: "3000"
   PRODUCT_SERVICE_URL: "http://product-service:3000"
-  CART_SERVICE_URL: "http://cart-service:3001" 
+  CART_SERVICE_URL: "http://cart-service:3000" 

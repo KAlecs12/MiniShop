@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: minishop/product-service:latest
+          image: docker.io/cgayet/product-service:0.0.1
           ports:
             - containerPort: 3000
           envFrom:
@@ -39,9 +39,9 @@ spec:
     spec:
       containers:
         - name: cart-service
-          image: minishop/cart-service:latest
+          image: docker.io/cgayet/cart-service:0.0.1
           ports:
-            - containerPort: 3001
+            - containerPort: 3000
           envFrom:
             - configMapRef:
                 name: cart-service-config
@@ -63,9 +63,9 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: minishop/order-service:latest
+          image: docker.io/cgayet/order-service:0.0.1
           ports:
-            - containerPort: 3002
+            - containerPort: 3000
           envFrom:
             - configMapRef:
                 name: order-service-config 
