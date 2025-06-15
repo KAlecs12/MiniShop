@@ -41,7 +41,7 @@ spec:
         - name: cart-service
           image: minishop/cart-service:latest
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
           envFrom:
             - configMapRef:
                 name: cart-service-config
@@ -65,7 +65,7 @@ spec:
         - name: order-service
           image: minishop/order-service:latest
           ports:
-            - containerPort: 3000
+            - containerPort: 3002
           envFrom:
             - configMapRef:
                 name: order-service-config 
